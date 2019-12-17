@@ -5,8 +5,8 @@ function pageLoad() {
 
 function main() {
     let typeSelectElement = document.getElementById("type");
+
     let choseTo = typeSelectElement.value;
-    
     let values = getValues();
 
     if (choseTo === "Encrypt") {
@@ -17,11 +17,17 @@ function main() {
 }
 
 function encrypt(key, text) {
-    return;
+    let encryptedNumber = parseInt(key) * parseInt(text);
+
+    let outputElement = document.getElementById("output");
+    outputElement.innerHTML = convertToBase(encryptedNumber.toString(), 10, 95);
 }
 
 function decrypt(key, text) {
-    return;
+    let decryptedNumber = parseInt(text) / parseInt(key);
+
+    let outputElement = document.getElementById("output");
+    outputElement.innerHTML = convertToBase(decryptedNumber.toString(), 10, 95);
 }
 
 function getValues() {
@@ -32,7 +38,7 @@ function getValues() {
     textRawValue = textInputElement.value;
     
     keyNumValue = convertToBase(keyRawValue, 95, 10);
-    textNumValue = convertToBase(textNumValue, 95, 10);
+    textNumValue = convertToBase(textRawValue, 95, 10);
 
     return {
         "key": keyNumValue,
@@ -76,10 +82,10 @@ function convertToBase(number, baseOld, baseNew) {
     return newNum;
 }
 
+window.addEventListener("load", pageLoad);
+
+
 // Code provided by: wteuber (https://gist.github.com/wteuber/6241786)
 Math.fmod = function (a,b) {
     return Number((a - (Math.floor(a / b) * b)).toPrecision(8));
 };
-
-window.addEventListener("load", pageLoad);
-
