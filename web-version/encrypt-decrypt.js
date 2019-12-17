@@ -9,6 +9,10 @@ function main() {
     let choseTo = typeSelectElement.value;
     let values = getValues();
 
+    if (values === null) {
+        return;
+    }
+
     if (choseTo === "Encrypt") {
         encrypt(values["key"], values["text"]);
     } else if (choseTo === "Decrypt") {
@@ -36,6 +40,12 @@ function getValues() {
 
     keyRawValue = keyInputElement.value;
     textRawValue = textInputElement.value;
+
+    if ((keyRawValue.length+textRawValue.length) >= 128) {
+        let outputElement = document.getElementById("output");
+        outputElement.innerHTML = "The combination of key and phrase must not be longer than 128 characters long.";
+        return null;
+    }
     
     keyNumValue = convertToBase(keyRawValue, 95, 10);
     textNumValue = convertToBase(textRawValue, 95, 10);
